@@ -133,15 +133,21 @@ npm start # or npm run dev for development
 # Screenshots & UI Previews
 
 ## User DashBoard
+### Regsistration Page  
 ![Alt Text](./frontend/src/assets/image/Regsistion%20Page.png)
+### Log in Page 
 ![Alt Text](./frontend/src/assets/image/login%20Page.png)
+### User DashBoard 
 ![Alt Text](./frontend/src/assets/image/User%20DashBoard.png)
+### Seacrh City By CityName
 ![Alt Text](./frontend/src/assets/image/City%20Search.png)
 
 
 
-## Admin DashBoard
-
+# Admin DashBoard
+## Delete and Edit Button
 ![Alt Text](./frontend/src/assets/image/Admin%20Dashboard.png)
+## Add Hospital
 ![Alt Text](./frontend/src/assets/image/Add%20Hospital.png)
+## Edit Hospital
 ![Alt Text](./frontend/src/assets/image/Update%20Hospital.png)
