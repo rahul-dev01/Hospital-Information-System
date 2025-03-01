@@ -1,22 +1,21 @@
-const express = require('express')
-require('dotenv').config()
-require("./db/connection")
-const hospitalRoutes = require("./routes/hospitalRoutes");
-const authRouters = require("./routes/authRoutes")
+const express = require("express");
+require("dotenv").config();
+require("./db/connection");
+const v1Router = require("./routes/v1/v1Router");
+const { RequestLoggerMiddleware } = require("./middleware/authMiddleware");
+const cors = require("cors");
 
-const cors = require("cors")
+const NODE_ENV = process.env.NODE_ENV || "development";
+const PORT = process.env[`${NODE_ENV}_PORT`] || 8080;
 
-const NODE_ENV = process.env.NODE_ENV
+const server = express();
 
-const PORT = process.env[`${NODE_ENV}_PORT`]
-const server = express()
+server.use(express.json());
+server.use(cors());
+server.use(RequestLoggerMiddleware);
 
-server.use(express.json())
-server.use(cors())
+server.use("/api/v1", v1Router);
 
-server.use("/api/v1/auth", authRouters);
-server.use("/api/v1/hospitals", hospitalRoutes);
-
-server.listen(PORT, ()=>{
-    console.log(`${NODE_ENV} Server is started on PORT - ${PORT}`)
-})
+server.listen(PORT, () => {
+  console.log(`${NODE_ENV} Server is started on PORT - ${PORT}`);
+});

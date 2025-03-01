@@ -1,52 +1,81 @@
-const Hospital = require("../models/hospital")
+const Hospital = require("../models/hospital");
 
-
+// Create a new hospital
 exports.createHospital = async (req, res) => {
-    try {
-      const newHospital = new Hospital(req.body);
-      await newHospital.save();
-      res.status(201).json(newHospital);
-    } catch (err) {
-      res.status(500).json({ error: err.message });
+  try {
+    const newHospital = new Hospital(req.body);
+    await newHospital.save();
+    res.status(201).json(newHospital);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// Get hospitals by city (case-insensitive)
+exports.getHospitalsByCity = async (req, res) => {
+  try {
+    const { city } = req.query;
+
+    let query = {};
+    if (city) {
+      query.city = { $regex: new RegExp(city, "i") };
     }
-  };
-  
-  exports.getHospitalsByCity = async (req, res) => {
-    try {
-      const { city } = req.query;
-      const hospitals = await Hospital.find({ city });
-      res.status(200).json(hospitals);
-    } catch (err) {
-      res.status(500).json({ error: err.message });
+
+    const hospitals = await Hospital.find(query);
+    if (hospitals.length === 0) {
+      return res.status(404).json({ error: "No hospitals found in this city." });
     }
-  };
-  
-  exports.deleteHospital = async (req, res) => {
-    try {
-      const { id } = req.query;
-      await Hospital.findByIdAndDelete(id);
-      res.status(200).json({ message: "Hospital deleted successfully" });
-    } catch (err) {
-      res.status(500).json({ error: err.message });
+
+    res.status(200).json(hospitals);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// Update hospital details
+exports.updateHospital = async (req, res) => {
+  try {
+    const { id } = req.query;
+    const updatedHospital = await Hospital.findByIdAndUpdate(id, req.body, { new: true });
+
+    if (!updatedHospital) {
+      return res.status(404).json({ error: "Hospital not found." });
     }
-  };
-  
-  exports.updateHospital = async (req, res) => {
-    try {
-      const { id } = req.query;
-      const updatedHospital = await Hospital.findByIdAndUpdate(id, req.body, { new: true });
-      res.status(200).json(updatedHospital);
-    } catch (err) {
-      res.status(500).json({ error: err.message });
+
+    res.status(200).json(updatedHospital);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// Delete a hospital
+exports.deleteHospital = async (req, res) => {
+  try {
+    const { id } = req.query;
+    const hospital = await Hospital.findByIdAndDelete(id);
+
+    if (!hospital) {
+      return res.status(404).json({ error: "Hospital not found." });
     }
-  };
-  
-  exports.addHospitalDetails = async (req, res) => {
-    try {
-      const { id } = req.query;
-      const updatedHospital = await Hospital.findByIdAndUpdate(id, req.body, { new: true });
-      res.status(200).json(updatedHospital);
-    } catch (err) {
-      res.status(500).json({ error: err.message });
+
+    res.status(200).json({ message: "Hospital deleted successfully." });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// Add hospital details
+exports.addHospitalDetails = async (req, res) => {
+  try {
+    const { id } = req.query;
+    const updatedHospital = await Hospital.findByIdAndUpdate(id, req.body, { new: true });
+
+    if (!updatedHospital) {
+      return res.status(404).json({ error: "Hospital not found." });
     }
-  };
+
+    res.status(200).json(updatedHospital);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
