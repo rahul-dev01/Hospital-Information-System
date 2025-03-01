@@ -1,50 +1,147 @@
-# 🏥 Hospital Management System
+# 🏥 Hospital Information System
 
-This is a **MERN (MongoDB, Express.js, React, Node.js)** based **Hospital Management System** with **JWT Authentication**, allowing users to **register, log in, and manage hospital data**.
+## Overview
 
-## 📌 Overview
+The Hospital Management System is a web-based application that allows users to view hospital information and administrators to manage hospital records. The system includes features such as hospital registration, updates, deletion, and user authentication.
 
-The Hospital Management System is a full-stack web application that allows administrators to manage hospitals and users to browse hospital details based on city filters.
 
-## 🚀 Features
 
--   **User Authentication (Register/Login):** Secure user registration and login functionality for both admin and user roles.
--   **JWT-based Authentication & Authorization:** Protect API endpoints and manage user sessions.
--   **Hospital Management (Add, Update, Delete, View):** Comprehensive CRUD operations for hospital data.
-    -   **Admin:** Add, Update, Delete Hospitals.
-    -   **User:** View hospitals with city-based filtering.
--   **Role-Based Access (Admin/User):** Differentiate access permissions based on user roles.
--   **Protected Routes using React Router:** Secure frontend routes, ensuring only authenticated users can access certain pages.
--   **Secure API with Express & MongoDB:** Robust backend implementation for data management and security.
--   **Frontend built with Vite & React:** Modern and efficient frontend development.
--   **City-based Filtering:** Users can filter hospitals based on city.
--   **REST API:** Built with Express.js.
+## User Guide
 
----
+### For Users:
 
-## 🛠️ Tech Stack
+1.  Register an account or log in.
+2.  Browse hospitals and filter by city.
+3.  View hospital details like specialities and ratings.
+4.  Logout when done.
 
-**Backend:**
+### For Admins:
 
--   Node.js
--   Express.js
--   MongoDB 
+1.  Log in with admin credentials.
+2.  Add a new hospital using the Add Hospital feature.
+3.  Edit hospital details by selecting a hospital and updating its information.
+4.  Delete hospitals as needed.
+5.  Logout when done.
+
+## Tech Stack
+
+### Frontend:
+
+-   React.js (with Vite)
+-   React Router for navigation
+-   Axios for API calls
+-   Tailwind CSS for styling
+
+### Backend:
+
+-   Node.js & Express.js
+-   MongoDB with Mongoose
 -   JWT Authentication
+-   bcrypt for password hashing
 
-**Frontend:**
+## Installation Guide
 
--   React.js (Vite)
--   React Router DOM
--   Axios
+### Prerequisites
 
----
+-   Node.js installed
+-   MongoDB database
 
-## ⚡ Project Setup
+### 1. Clone the Repository
 
-### **1️⃣ Clone the Repository**
+```
+git clone <repository_url>
+cd hospital-management-system 
+```
 
-```bash
-git clone [https://github.com/rahul-dev01/Hospital-Information-System.git]
-cd hospital-management-system
+### 2. Backend Setup
+```
+cd backend
+npm install
+
+```
 
 
+Create a .env file in the backend directory with the following variables:
+
+```
+PORT=<Port>
+MONGO_URI=<MongoDb Url>
+JWT_SECRET=<your_jwt_secret>
+```
+
+### Start the backend server:
+```
+npm start # or npm run dev for development
+```
+
+### 3. Frontend Setup
+
+```
+npm start # or npm run dev for development
+```
+## API Endpoints
+
+### Authentication:
+
+-   **`POST /api/auth/register` (Register a user)**
+    -   Description: Registers a new user.
+    -   Request Body: `{ name, email, password }`
+    -   Response: `{ token, user }`
+
+-   **`POST /api/auth/login` (Login a user)**
+    -   Description: Logs in an existing user.
+    -   Request Body: `{ email, password }`
+    -   Response: `{ token, user }`
+
+### Hospitals:
+
+-   **`GET /api/hospitals?city={city}` (Get all hospitals by city)**
+    -   Description: Retrieves a list of all hospitals in a specific city.
+    -   Response: `[ { hospital1 }, { hospital2 }, ... ]`
+
+-   **`POST /api/hospitals` (Add a new hospital - Admin only)**
+    -   Description: Adds a new hospital record.
+    -   Authorization: Requires admin authentication (JWT).
+    -   Request Body: `{ name, city, specialties, rating, imageUrl, description, numberOfDoctors, numberOfDepartments }`
+    -   Response: `{ hospital }`
+
+-   **`GET /api/hospitals` (Get all hospitals)**
+    -   Description: Retrieves a list of all hospitals.
+    -   Response: `[ { hospital1 }, { hospital2 }, ... ]`
+
+-   **`PUT /api/hospitals/:id` (Update a hospital - Admin only)**
+    -   Description: Updates an existing hospital record.
+    -   Authorization: Requires admin authentication (JWT).
+    -   Path Parameter: `id` (hospital ID)
+    -   Request Body: `{ name, city, specialties, rating, imageUrl, description, numberOfDoctors, numberOfDepartments }`
+    -   Response: `{ hospital }`
+
+-   **`DELETE /api/hospitals/:id` (Delete a hospital - Admin only)**
+    -   Description: Deletes a hospital record.
+    -   Authorization: Requires admin authentication (JWT).
+    -   Path Parameter: `id` (hospital ID)
+    -   Response: `{ message: "Hospital deleted successfully" }`
+
+-   **`PUT /api/hospitals/:id` (Update hospital details - Admin only)**
+    -   Description: Updates an existing hospital record.
+    -   Authorization: Requires admin authentication (JWT).
+    -   Path Parameter: `id` (hospital ID)
+    -   Request Body: `{ name, city, specialties, rating, imageUrl, description, numberOfDoctors, numberOfDepartments }`
+    -   Response: `{ hospital }`
+
+
+# Screenshots & UI Previews
+
+## User DashBoard
+![Alt Text](./frontend/src/assets/image/Regsistion%20Page.png)
+![Alt Text](./frontend/src/assets/image/login%20Page.png)
+![Alt Text](./frontend/src/assets/image/User%20DashBoard.png)
+![Alt Text](./frontend/src/assets/image/City%20Search.png)
+
+
+
+## Admin DashBoard
+
+![Alt Text](./frontend/src/assets/image/Admin%20Dashboard.png)
+![Alt Text](./frontend/src/assets/image/Add%20Hospital.png)
+![Alt Text](./frontend/src/assets/image/Update%20Hospital.png)
