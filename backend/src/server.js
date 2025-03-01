@@ -4,7 +4,8 @@ require("./db/connection");
 const v1Router = require("./routes/v1/v1Router");
 const cors = require("cors");
 
-const PORT = process.env[`${process.env.NODE_ENV || "development"}_PORT`] || 8080;
+const NODE_ENV = process.env.NODE_ENV
+const PORT = process.env[`${NODE_ENV}_PORT`]  || 8080
 
 const server = express();
 
