@@ -3,13 +3,12 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import "./AdminDashboard.css"; // Import CSS file
 
-const BASE_URL = import.meta.env.VITE_BASE_URL; 
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
   const [hospitals, setHospitals] = useState([]);
 
-  // Fetch hospitals when component mounts
   useEffect(() => {
     fetchHospitals();
   }, []);
@@ -25,14 +24,13 @@ const AdminDashboard = () => {
     }
   };
 
-  // Delete hospital
   const handleDelete = async (id) => {
     try {
       await axios.delete(`${BASE_URL}/hospitals/delete?id=${id}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
       alert("Hospital deleted successfully!");
-      fetchHospitals(); // Refresh list
+      fetchHospitals();
     } catch (error) {
       console.error("Error deleting hospital", error);
       alert("Failed to delete hospital.");
@@ -47,12 +45,18 @@ const AdminDashboard = () => {
 
   return (
     <div className="admin-dashboard">
-      <h1>Admin Dashboard</h1>
-      <p>Welcome, Admin! You can manage hospitals here.</p>
+      {/* Top Bar with Logout Button */}
+      <div className="admin-top-bar">
+        <h1>Admin Dashboard</h1>
+        <button className="logout-btn" onClick={handleLogout}>Logout</button>
+      </div>
 
+      {/* Welcome Message */}
+      <p className="welcome-message">Welcome, Admin! You can manage hospitals here.</p>
+
+      {/* Admin Controls */}
       <div className="admin-buttons">
         <button onClick={() => navigate("/add-hospital")}>Add New Hospital</button>
-        <button onClick={handleLogout}>Logout</button>
       </div>
 
       {/* Hospital List */}
@@ -71,9 +75,12 @@ const AdminDashboard = () => {
               <p><strong>Specialities:</strong> {hospital.specialities.join(", ")}</p>
               <p><strong>Rating:</strong> ⭐ {hospital.rating}</p>
               <div className="hospital-actions">
-                {/* Pass hospital data when navigating to edit page */}
-                <button onClick={() => navigate(`/edit-hospital/${hospital._id}`, { state: hospital })}>Edit</button>
-                <button className="delete-btn" onClick={() => handleDelete(hospital._id)}>Delete</button>
+                <button onClick={() => navigate(`/edit-hospital/${hospital._id}`, { state: hospital })}>
+                  Edit
+                </button>
+                <button className="delete-btn" onClick={() => handleDelete(hospital._id)}>
+                  Delete
+                </button>
               </div>
             </div>
           ))

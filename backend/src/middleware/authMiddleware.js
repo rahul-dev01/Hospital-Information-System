@@ -1,11 +1,5 @@
 const jwt = require("jsonwebtoken");
 
-// Request Logger Middleware
-exports.RequestLoggerMiddleware = (req, res, next) => {
-  console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
-  next();
-};
-
 // Authentication Middleware (Verifies JWT)
 exports.authMiddleware = (req, res, next) => {
   const token = req.header("Authorization");
@@ -20,17 +14,16 @@ exports.authMiddleware = (req, res, next) => {
       return res.status(400).json({ error: "Invalid Token Format" });
     }
 
-    const verified = jwt.verify(tokenParts[1], process.env.JWT_SECRET);
-    req.user = verified;
+    req.user = jwt.verify(tokenParts[1], process.env.JWT_SECRET);
     next();
-  } catch (err) {
+  } catch {
     res.status(401).json({ error: "Invalid or Expired Token" });
   }
 };
 
 // Admin Authorization Middleware
 exports.adminMiddleware = (req, res, next) => {
-  if (!req.user || req.user.role !== "admin") {
+  if (req.user?.role !== "admin") {
     return res.status(403).json({ error: "Access Denied. Admins Only." });
   }
   next();

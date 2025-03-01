@@ -6,6 +6,7 @@ import UserDashboard from "./pages/UserDashboard";
 import AddHospital from "./pages/AddHospital";
 import EditHospital from "./pages/EditHospital";
 
+
 const PrivateRoute = ({ children, role }) => {
   const token = localStorage.getItem("token");
   const userRole = localStorage.getItem("role");

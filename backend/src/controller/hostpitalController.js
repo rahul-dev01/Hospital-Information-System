@@ -16,13 +16,10 @@ exports.getHospitalsByCity = async (req, res) => {
   try {
     const { city } = req.query;
 
-    let query = {};
-    if (city) {
-      query.city = { $regex: new RegExp(city, "i") };
-    }
-
+    const query = city ? { city: { $regex: new RegExp(city, "i") } } : {};
     const hospitals = await Hospital.find(query);
-    if (hospitals.length === 0) {
+
+    if (!hospitals.length) {
       return res.status(404).json({ error: "No hospitals found in this city." });
     }
 

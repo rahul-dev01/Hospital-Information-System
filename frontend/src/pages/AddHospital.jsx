@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import "./AddHospital.css"; // Import the CSS file
 
 const BASE_URL = import.meta.env.VITE_BASE_URL; 
 
@@ -18,7 +19,7 @@ const AddHospital = () => {
 
   const navigate = useNavigate();
 
-  // Handle input changes
+  
   const handleChange = (e) => {
     setHospital({ ...hospital, [e.target.name]: e.target.value });
   };
@@ -40,17 +41,33 @@ const AddHospital = () => {
   };
 
   return (
-    <div>
+    <div className="add-hospital-container">
       <h2>Add Hospital</h2>
-      <form onSubmit={handleSubmit}>
-        <input type="text" name="name" placeholder="Hospital Name" value={hospital.name} onChange={handleChange} required />
-        <input type="text" name="city" placeholder="City" value={hospital.city} onChange={handleChange} required />
-        <input type="text" name="imageUrl" placeholder="Image URL" value={hospital.imageUrl} onChange={handleChange} />
-        <input type="text" name="specialities" placeholder="Specialities (comma-separated)" value={hospital.specialities} onChange={handleChange} required />
-        <input type="number" name="rating" placeholder="Rating" value={hospital.rating} onChange={handleChange} />
-        <input type="text" name="description" placeholder="Description" value={hospital.description} onChange={handleChange} />
-        <input type="number" name="numberOfDoctors" placeholder="Number of Doctors" value={hospital.numberOfDoctors} onChange={handleChange} />
-        <input type="number" name="numberOfDepartments" placeholder="Number of Departments" value={hospital.numberOfDepartments} onChange={handleChange} />
+      <form className="add-hospital-form" onSubmit={handleSubmit}>
+        <label>Hospital Name:</label>
+        <input type="text" name="name" placeholder="Enter hospital name" value={hospital.name} onChange={handleChange} required />
+
+        <label>City:</label>
+        <input type="text" name="city" placeholder="Enter city" value={hospital.city} onChange={handleChange} required />
+
+        <label>Image URL:</label>
+        <input type="text" name="imageUrl" placeholder="Enter image URL" value={hospital.imageUrl} onChange={handleChange} />
+
+        <label>Specialities (comma-separated):</label>
+        <input type="text" name="specialities" placeholder="e.g. Cardiology, Neurology" value={hospital.specialities} onChange={handleChange} required />
+
+        <label>Rating:</label>
+        <input type="number" name="rating" placeholder="Enter rating (1-5)" value={hospital.rating} onChange={handleChange} />
+
+        <label>Description:</label>
+        <input type="text" name="description" placeholder="Enter description" value={hospital.description} onChange={handleChange} />
+
+        <label>Number of Doctors:</label>
+        <input type="number" name="numberOfDoctors" placeholder="Enter number of doctors" value={hospital.numberOfDoctors} onChange={handleChange} />
+
+        <label>Number of Departments:</label>
+        <input type="number" name="numberOfDepartments" placeholder="Enter number of departments" value={hospital.numberOfDepartments} onChange={handleChange} />
+
         <button type="submit">Add Hospital</button>
       </form>
     </div>

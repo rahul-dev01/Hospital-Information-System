@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import "./UserDashboard.css"; 
+import "./UserDashboard.css";
 
-const BASE_URL = import.meta.env.VITE_BASE_URL; 
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const UserDashboard = () => {
   const navigate = useNavigate();
@@ -24,10 +24,17 @@ const UserDashboard = () => {
       const res = await axios.get(`${BASE_URL}/hospitals?city=${city.toLowerCase()}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
-      setHospitals(res.data);
-      setError("");
+
+      if (res.data.length === 0) {
+        setHospitals([]); // Clear hospitals list
+        setError("No hospitals found!");
+      } else {
+        setHospitals(res.data);
+        setError(""); // Clear previous error message
+      }
     } catch (err) {
-      setError("Failed to fetch hospitals");
+      setHospitals([]); // Ensure hospitals array is empty on error
+      
     }
     setLoading(false);
   };
@@ -39,22 +46,31 @@ const UserDashboard = () => {
 
   return (
     <div className="dashboard-container">
-      <h1>User Dashboard</h1>
-      <p>Welcome to the hospital management dashboard.</p>
+      
+      {/* User Top Bar */}
+      <div className="user-top-bar">
+        <h1>User Dashboard</h1>
+        <button onClick={handleLogout} className="logout-btn">Logout</button>
+      </div>
 
-      {/* Filter by City */}
-      <input
-        type="text"
-        placeholder="Search by city"
-        value={city}
-        onChange={(e) => setCity(e.target.value)}
-        className="search-input"
-      />
+      <p className="welcome-message">🏥 Welcome to the <strong>Hospital Management Dashboard</strong>. Find the best hospitals in your city with ease!</p>
 
-      {/* Hospital List in Card Format */}
-      {loading && <p>Loading hospitals...</p>}
+      {/* Search Input */}
+      <div className="search-container">
+        <input
+          type="text"
+          placeholder="Search hospitals by city..."
+          value={city}
+          onChange={(e) => setCity(e.target.value)}
+          className="search-input"
+        />
+      </div>
+
+      {/* Loading and Error Messages */}
+      {loading && <p className="loading-text">Loading hospitals...</p>}
       {error && <p className="error-message">{error}</p>}
 
+      {/* Hospital List */}
       <div className="hospital-grid">
         {hospitals.length > 0 ? (
           hospitals.map((hospital) => (
@@ -67,12 +83,9 @@ const UserDashboard = () => {
             </div>
           ))
         ) : (
-          <p>No hospitals found.</p>
+          !loading && <p className="no-hospitals-text">No hospitals found.</p>
         )}
       </div>
-
-      {/* Logout Button */}
-      <button onClick={handleLogout} className="logout-button">Logout</button>
     </div>
   );
 };
