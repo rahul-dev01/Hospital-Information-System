@@ -1,15 +1,14 @@
-/* Centering the login container */
+
 .container {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  /* Full-screen height */
+
   background-color: #f4f4f4;
-  /* Light gray background */
+ 
 }
 
-/* Login box styling */
 .login-container {
   width: 350px;
   padding: 20px;
@@ -20,14 +19,12 @@
   animation: fadeIn 0.5s ease-in-out;
 }
 
-/* Title */
 h2 {
   margin-bottom: 1rem;
   color: #333;
   font-size: 22px;
 }
 
-/* Form inputs */
 form {
   display: flex;
   flex-direction: column;
@@ -48,7 +45,6 @@ input:focus {
   box-shadow: 0px 0px 5px rgba(0, 123, 255, 0.5);
 }
 
-/* Login button */
 button {
   background-color: #007bff;
   color: white;
@@ -65,14 +61,13 @@ button:hover {
   background-color: #0056b3;
 }
 
-/* Error message */
+
 .error-message {
   color: red;
   font-size: 14px;
   margin-bottom: 10px;
 }
 
-/* Register link */
 p {
   margin-top: 15px;
   font-size: 14px;
@@ -91,7 +86,7 @@ p {
   color: #0056b3;
 }
 
-/* Fade-in animation */
+
 @keyframes fadeIn {
   from {
     opacity: 0;

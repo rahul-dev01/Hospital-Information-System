@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import "./AddHospital.css"; // Import the CSS file
+import "./AddHospital.css";
 
-const BASE_URL = import.meta.env.VITE_BASE_URL; 
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const AddHospital = () => {
   const [hospital, setHospital] = useState({
@@ -19,7 +19,7 @@ const AddHospital = () => {
 
   const navigate = useNavigate();
 
-  
+
   const handleChange = (e) => {
     setHospital({ ...hospital, [e.target.name]: e.target.value });
   };

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import "./EditHospital.css"; // Import CSS file
+import "./EditHospital.css"; 
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 

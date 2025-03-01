@@ -45,21 +45,21 @@ const AdminDashboard = () => {
 
   return (
     <div className="admin-dashboard">
-      {/* Top Bar with Logout Button */}
+
       <div className="admin-top-bar">
         <h1>Admin Dashboard</h1>
         <button className="logout-btn" onClick={handleLogout}>Logout</button>
       </div>
 
-      {/* Welcome Message */}
+
       <p className="welcome-message">Welcome, Admin! You can manage hospitals here.</p>
 
-      {/* Admin Controls */}
+
       <div className="admin-buttons">
         <button onClick={() => navigate("/add-hospital")}>Add New Hospital</button>
       </div>
 
-      {/* Hospital List */}
+
       <h2>Hospital List</h2>
       <div className="hospital-list">
         {hospitals.length > 0 ? (
@@ -77,6 +77,9 @@ const AdminDashboard = () => {
               <div className="hospital-actions">
                 <button onClick={() => navigate(`/edit-hospital/${hospital._id}`, { state: hospital })}>
                   Edit
+                </button>
+                <button onClick={() => navigate(`/hospital-details/${hospital._id}`, { state: hospital })}>
+                  More Details
                 </button>
                 <button className="delete-btn" onClick={() => handleDelete(hospital._id)}>
                   Delete

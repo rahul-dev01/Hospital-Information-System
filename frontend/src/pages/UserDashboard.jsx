@@ -8,7 +8,7 @@ const BASE_URL = import.meta.env.VITE_BASE_URL;
 const UserDashboard = () => {
   const navigate = useNavigate();
   const [hospitals, setHospitals] = useState([]);
-  const [city, setCity] = useState(""); // Filter by city
+  const [city, setCity] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -17,7 +17,6 @@ const UserDashboard = () => {
     navigate("/");
   };
 
-  // Fetch hospitals based on city (case-insensitive)
   const fetchHospitals = async () => {
     setLoading(true);
     try {
@@ -26,36 +25,34 @@ const UserDashboard = () => {
       });
 
       if (res.data.length === 0) {
-        setHospitals([]); // Clear hospitals list
+        setHospitals([]);
         setError("No hospitals found!");
       } else {
         setHospitals(res.data);
-        setError(""); // Clear previous error message
+        setError("");
       }
     } catch (err) {
-      setHospitals([]); // Ensure hospitals array is empty on error
-      
+      setError("Failed to fetch hospitals. Please try again later.");
+      setHospitals([]);
     }
     setLoading(false);
   };
 
-  // Fetch hospitals when city is updated
   useEffect(() => {
     fetchHospitals();
   }, [city]);
 
   return (
     <div className="dashboard-container">
-      
-      {/* User Top Bar */}
       <div className="user-top-bar">
         <h1>User Dashboard</h1>
         <button onClick={handleLogout} className="logout-btn">Logout</button>
       </div>
 
-      <p className="welcome-message">🏥 Welcome to the <strong>Hospital Management Dashboard</strong>. Find the best hospitals in your city with ease!</p>
+      <p className="welcome-message">
+        <strong>Hospital Management Dashboard</strong> - Find the best hospitals in your city with ease!
+      </p>
 
-      {/* Search Input */}
       <div className="search-container">
         <input
           type="text"
@@ -66,20 +63,27 @@ const UserDashboard = () => {
         />
       </div>
 
-      {/* Loading and Error Messages */}
+      {hospitals.length > 0 && !loading && (
+        <p className="total-count">Total Hospitals Found: <strong>{hospitals.length}</strong></p>
+      )}
+
       {loading && <p className="loading-text">Loading hospitals...</p>}
       {error && <p className="error-message">{error}</p>}
 
-      {/* Hospital List */}
       <div className="hospital-grid">
         {hospitals.length > 0 ? (
           hospitals.map((hospital) => (
             <div key={hospital._id} className="hospital-card">
-              <img src={hospital.imageUrl || "https://via.placeholder.com/300"} alt={hospital.name} />
-              <h3>{hospital.name}</h3>
+              <img src={hospital.imageUrl || "https://via.placeholder.com/300"} alt={hospital.name} className="hospital-image" />
+              <h3 className="hospital-name">{hospital.name}</h3>
               <p><strong>City:</strong> {hospital.city}</p>
-              <p><strong>Specialities:</strong> {hospital.specialities.join(", ")}</p>
-              <p><strong>Rating:</strong> ⭐ {hospital.rating}</p>
+              <p><strong>Specialities:</strong> {hospital.specialities.length > 0 ? hospital.specialities.join(", ") : "N/A"}</p>
+              <p><strong>Rating:</strong> ⭐ {hospital.rating || "Not Rated"}</p>
+              
+
+              <button className="view-more-btn" onClick={() => navigate(`/user-hospital-details`, { state: hospital })}>
+                View More
+              </button>
             </div>
           ))
         ) : (

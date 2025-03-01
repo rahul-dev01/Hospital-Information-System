@@ -1,13 +1,13 @@
-/* Centering the registration container */
+
 .container-registration {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* Full-screen height */
-    background-color: #f4f4f4; /* Light gray background */
+    height: 100vh; 
+    background-color: #f4f4f4; 
   }
   
-  /* Registration box styling */
+
   .register-container {
     width: 350px;
     padding: 20px;
@@ -18,14 +18,13 @@
     animation: fadeIn 0.5s ease-in-out;
   }
   
-  /* Title */
+ 
   h2 {
     margin-bottom: 1rem;
     color: #333;
     font-size: 22px;
   }
-  
-  /* Form inputs */
+
   form {
     display: flex;
     flex-direction: column;
@@ -46,7 +45,7 @@
     box-shadow: 0px 0px 5px rgba(0, 123, 255, 0.5);
   }
   
-  /* Role Toggle Switch */
+
   .toggle-switch {
     display: flex;
     align-items: center;
@@ -92,7 +91,7 @@
     left: 26px;
   }
   
-  /* Register button */
+
   button {
     background-color: #007bff;
     color: white;
@@ -109,14 +108,14 @@
     background-color: #0056b3;
   }
   
-  /* Error message */
+
   .error-message {
     color: red;
     font-size: 14px;
     margin-bottom: 10px;
   }
   
-  /* Login link */
+
   p {
     margin-top: 15px;
     font-size: 14px;
@@ -135,7 +134,7 @@
     color: #0056b3;
   }
   
-  /* Fade-in animation */
+ 
   @keyframes fadeIn {
     from {
       opacity: 0;
