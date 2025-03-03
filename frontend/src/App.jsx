@@ -4,7 +4,7 @@ import Register from "./pages/Register";
 import AdminDashboard from "./pages/AdminDashboard";
 import UserDashboard from "./pages/UserDashboard";
 import AddHospital from "./pages/AddHospital";
-import EditHospital from "./pages/EditHospital";
+import EditHospital from "./pages/UpdateHospital.jsx";
 import HospitalDetails from "./pages/HospitalDetails";
 import UserHospitalDetails from "./pages/UserHospitalDetails.jsx"; 
 

@@ -1,10 +1,13 @@
 import { useLocation, useNavigate } from "react-router-dom";
+import { useState } from "react";
 import "./UserHospitalDetails.css";
 
 const UserHospitalDetails = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const hospital = location.state;
+
+  const [showModal, setShowModal] = useState(false);
 
   if (!hospital) {
     return <p className="error-message">No hospital details available.</p>;
@@ -25,7 +28,6 @@ const UserHospitalDetails = () => {
         <p><strong>Departments:</strong> {hospital.numberOfDepartments || "N/A"}</p>
         <p><strong>Description:</strong> {hospital.description || "No description available."}</p>
 
-      
         {hospital.images?.length > 0 && (
           <div className="hospital-images">
             <h3>Additional Images</h3>
@@ -38,7 +40,23 @@ const UserHospitalDetails = () => {
         )}
       </div>
 
-      <button className="book-appointment-btn">Book Appointment</button>
+      <button 
+        className="book-appointment-btn" 
+        onClick={() => !hospital.hasAvailableSlots ? setShowModal(true) : alert("Appointment Booked!")}
+      >
+        Book Appointment
+      </button>
+
+     
+      {showModal && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h2>Slot Not Available</h2>
+            <p>Currently, there are no available slots for booking.</p>
+            <button className="close-btn" onClick={() => setShowModal(false)}>OK</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

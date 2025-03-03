@@ -158,3 +158,6 @@ npm start # or npm run dev for development
 ![Alt Text](./frontend/src/assets/image/Update%20Hospital.png)
 ## Admin DasBoard Hospital Details 
 ![Alt Text](./frontend/src/assets/image/admin%20hospital%20details%20.png)
+
+## Admin Delete Confirmation 
+![Alt Text](./frontend/src/assets/image/admin%20delete%20confirmation.png)
